@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SecureBank – CSRF Lab</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4f6fb;color:#182230;font:15px system-ui,-apple-system,Segoe UI,sans-serif}
+nav{background:#101828;color:white;padding:16px max(20px,calc((100% - 980px)/2));display:flex;justify-content:space-between;align-items:center}
+nav a{color:white;text-decoration:none;margin-left:16px}.wrap{max-width:980px;margin:36px auto;padding:0 20px}
+.card{background:white;border:1px solid #e4e7ec;border-radius:14px;padding:24px;margin:18px 0;box-shadow:0 4px 16px #10182808}
+h1{font-size:28px;margin-top:0}h2{font-size:20px}.muted{color:#667085}.pill{display:inline-block;padding:4px 9px;border-radius:30px;font-size:12px;font-weight:700}
+.red{background:#fee4e2;color:#b42318}.green{background:#dcfae6;color:#067647}.btn{display:inline-block;padding:11px 16px;border:0;border-radius:8px;background:#175cd3;color:white;text-decoration:none;cursor:pointer;font:inherit}
+.btn.secondary{background:#475467}.btn.danger{background:#b42318}input{display:block;width:100%;padding:11px;border:1px solid #d0d5dd;border-radius:8px;margin:7px 0 16px}
+label{font-weight:600}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.notice{padding:12px 14px;background:#eff8ff;border-radius:8px;color:#175cd3}.flash{padding:12px;background:#dcfae6;color:#067647;border-radius:8px}
+footer{color:#667085;font-size:13px;padding:25px 0}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f2f4f7;padding:12px;border-radius:8px}
+</style></head><body>
+<nav><strong>SecureBank · CSRF Security Lab</strong><div><a href="/dashboard">Dashboard</a><a href="/lab">CSRF Lab</a><a href="/secure/settings">Secure settings</a></div></nav>
+<div class="wrap">

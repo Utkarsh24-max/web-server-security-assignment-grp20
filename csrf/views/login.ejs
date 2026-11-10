@@ -1,0 +1,11 @@
+<%- include("partials/header") %>
+<div class="card" style="max-width:480px;margin:50px auto">
+<h1>Sign in</h1><p class="muted">Use one of the local demo accounts.</p>
+<% if (error) { %><p class="pill red"><%= error %></p><% } %>
+<form method="POST" action="/login">
+<label>Username</label><input name="username" value="alice" required>
+<label>Password</label><input type="password" name="password" value="password123" required>
+<button class="btn" type="submit">Login to demo</button>
+</form>
+<p class="muted">Demo: alice / password123 · bob / password123</p>
+</div><%- include("partials/footer") %>

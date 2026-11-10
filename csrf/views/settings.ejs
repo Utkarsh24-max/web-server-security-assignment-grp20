@@ -1,0 +1,18 @@
+<%- include("partials/header") %>
+<h1>Secured account settings</h1>
+<div class="card"><span class="pill green">CSRF token protected</span>
+<p>Current email: <strong><%= user.email %></strong></p>
+<form method="POST" action="/secure/change-email">
+<label>New test email</label><input type="email" name="email" value="alice-updated@example.test" required>
+<input type="hidden" name="csrfToken" value="<%= csrfToken %>">
+<button class="btn" type="submit">Update email securely</button>
+</form>
+<p class="muted">The server validates the synchronizer token stored in your session.</p></div>
+<div class="card"><h2>Negative test: missing token</h2>
+<p>This form intentionally omits the token. The server should reject it with HTTP 403.</p>
+<form method="POST" action="/secure/change-email">
+<input type="email" name="email" value="should-not-change@example.test" required>
+<button class="btn danger" type="submit">Submit without CSRF token</button>
+</form></div>
+<a href="/lab">Back to CSRF lab</a>
+<%- include("partials/footer") %>

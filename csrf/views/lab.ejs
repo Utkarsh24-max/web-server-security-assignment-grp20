@@ -1,0 +1,19 @@
+<%- include("partials/header") %>
+<h1>GET-based CSRF laboratory</h1>
+<p class="muted">Logged in as <strong><%= user.username %></strong>. Current email: <strong><%= user.email %></strong></p>
+<div class="grid">
+<div class="card"><span class="pill red">Intentionally vulnerable</span><h2>Vulnerable GET action</h2>
+<p>The route changes account state through GET and does not validate a CSRF token.</p>
+<pre>GET /vulnerable/change-email?email=csrf-demo@example.test</pre>
+<a class="btn danger" href="/vulnerable/change-email?email=csrf-demo@example.test">Run direct vulnerable test</a>
+<p class="muted">For the cross-origin demonstration, open the separate attacker page in the same browser:</p>
+<a href="http://localhost:3001/attacker-demo">Open local attacker demo →</a>
+</div>
+<div class="card"><span class="pill green">Protected</span><h2>Secured implementation</h2>
+<p>GET is not allowed to change email. A legitimate POST requires a session-bound CSRF token.</p>
+<a class="btn" href="/secure/settings">Open secured settings</a>
+<p class="muted">Try the same GET request:</p>
+<a href="/secure/change-email?email=csrf-demo@example.test">Attempt secured GET →</a>
+</div></div>
+<div class="card"><h2>What to observe</h2><ol><li>Log in as Alice.</li><li>Open the attacker page in another tab.</li><li>Trigger the forged GET action.</li><li>Return to this dashboard and verify the email changed.</li><li>Try the secured GET route and verify HTTP 405.</li><li>Use secured settings to test a valid POST and invalid token.</li></ol></div>
+<%- include("partials/footer") %>

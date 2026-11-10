@@ -1,0 +1,11 @@
+<%- include("partials/header") %>
+<h1>Account dashboard</h1><p class="muted">Signed in as <strong><%= user.username %></strong>.</p>
+<% if (flash) { %><div class="flash"><%= flash %></div><% } %>
+<div class="card">
+<span class="pill green">Authenticated session</span>
+<h2>Account profile</h2><p>Registered email: <strong><%= user.email %></strong></p>
+<p class="muted">This is simulated account data stored in your server-side session.</p>
+<a class="btn" href="/lab">Open CSRF lab</a> <a class="btn secondary" href="/secure/settings">Secure settings</a>
+</div>
+<div class="card"><h2>Session actions</h2><form method="POST" action="/logout"><button class="btn secondary">Logout</button></form></div>
+<%- include("partials/footer") %>
