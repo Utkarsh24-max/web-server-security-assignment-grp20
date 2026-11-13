@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SQL Lab · Authentication bypass</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script defer src="{{ url_for('static', filename='lab.js') }}"></script>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar"><a href="/" class="brand"><span class="mark">S/</span> SQL LAB</a><span class="local"><i></i> LOCAL TEACHING ENVIRONMENT</span></header>
+    {% block content %}{% endblock %}
+    <footer><span>WEB SERVER SECURITY / SQL INJECTION / VARIANT 01</span><span>Dummy accounts only · Runs on localhost</span></footer>
+  </div>
+</body>
+</html>

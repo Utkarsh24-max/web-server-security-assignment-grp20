@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="intro">
+  <p class="eyebrow">01 / THE LOGIN EXPERIMENT</p>
+  <h1>One input.<br><span>Two very different outcomes.</span></h1>
+  <p class="lede">See how a username can become a SQL instruction. Then keep the same input and change how the query is built.</p>
+</section>
+<nav class="mode-switch" aria-label="Login implementation">
+  <a class="{{ 'active vulnerable' if mode == 'vulnerable' }}" href="{{ url_for('login', mode='vulnerable') }}" {% if mode == 'vulnerable' %}aria-current="page"{% endif %}><span>01</span> Vulnerable login <small>String concatenation</small></a>
+  <a class="{{ 'active secure' if mode == 'secure' }}" href="{{ url_for('login', mode='secure') }}" {% if mode == 'secure' %}aria-current="page"{% endif %}><span>02</span> Fixed login <small>Parameterised query</small></a>
+</nav>
+<main class="lab-grid">
+  <section class="panel login-panel">
+    <div class="panel-heading"><h2>Campus portal</h2><span class="badge {{ mode }}">{{ 'VULNERABLE' if mode == 'vulnerable' else 'FIXED' }}</span></div>
+    <p class="muted">Sign in to the demonstration dashboard.</p>
+    <form method="post" action="{{ url_for('login', mode=mode) }}" autocomplete="off">
+      <label for="username">Username</label><input id="username" name="username" value="{{ username }}" placeholder="e.g. admin" required spellcheck="false" autocapitalize="none">
+      <label for="password">Password</label><input id="password" name="password" type="text" value="{{ password }}" placeholder="Enter a demo password" required spellcheck="false">
+      <p class="field-note">Password is visible for this classroom demonstration.</p>
+      <button class="submit" type="submit">Test login <span aria-hidden="true">→</span></button>
+    </form>
+    <div class="presets"><span class="eyebrow">LOAD A TEST CASE</span><div><button type="button" data-preset="wrong">Wrong password</button><button type="button" data-preset="attack">Bypass payload</button><button type="button" data-preset="valid">Valid login</button></div><p class="muted">Loads the inputs only. Press Test login to run.</p></div>
+  </section>
+  <section class="panel inspection" aria-label="Query and result">
+    <div class="panel-heading"><h2>Behind the login</h2><span class="step-label">INPUT → SQL → RESULT</span></div>
+    <p class="muted">{{ 'User input is inserted directly into the SQL string.' if mode == 'vulnerable' else 'The SQL stays fixed. Input is bound separately as data.' }}</p>
+    <div class="code-title">{{ 'EXECUTED SQL' if attempted else 'QUERY TEMPLATE' }}</div>
+    <pre><code>{% if query %}{{ query }}{% elif mode == 'secure' %}SELECT id, username, role FROM users
+WHERE username = ? AND password = ?{% else %}SELECT id, username, role FROM users
+WHERE username = '{username}' AND password = '{password}'{% endif %}</code></pre>
+    {% if parameters is not none %}<div class="code-title">BOUND PARAMETERS (USERNAME, PASSWORD)</div><pre class="parameters"><code>{{ parameters | tojson(indent=2) }}</code></pre>{% endif %}
+    {% if attempted %}
+      {% if user %}<div class="result success" role="status"><span class="eyebrow">AUTHENTICATED</span><h3>Welcome, {{ user.username }}.</h3><p>The database returned a matching row. Role: <strong>{{ user.role }}</strong>.</p><a href="{{ url_for('dashboard') }}">Open protected dashboard →</a></div>
+      {% elif error %}<div class="result failure" role="status"><span class="eyebrow">QUERY REJECTED</span><h3>Login failed.</h3><p>The input produced an invalid database query. Internal error details are hidden.</p></div>
+      {% else %}<div class="result {{ 'blocked' if mode == 'secure' else 'failure' }}" role="status"><span class="eyebrow">ACCESS DENIED</span><h3>Invalid username or password.</h3><p>No matching row was returned.{{ ' The supplied values were treated as data, including any SQL characters.' if mode == 'secure' }}</p></div>{% endif %}
+    {% else %}<div class="waiting"><span class="eyebrow">AWAITING YOUR FIRST TEST</span><p>Start with a wrong password, try the bypass, then repeat it on the fixed login.</p></div>{% endif %}
+  </section>
+</main>
+<section class="explanation"><div><span class="eyebrow">THE PAYLOAD</span><h2><code>admin' -- </code></h2><p>Use this as the username and <code>wrong</code> as the password.</p></div><ol><li><strong>admin</strong> selects the target demo account.</li><li><strong>'</strong> closes the username string.</li><li><strong>-- </strong> comments out the remaining password check.</li></ol><p class="fix-note"><strong>The fix</strong><br>With <code>?</code> placeholders, the entire payload is just a username. No such user exists, so authentication fails.</p></section>
+{% endblock %}

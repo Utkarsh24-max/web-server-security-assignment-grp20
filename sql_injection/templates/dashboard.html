@@ -1,0 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="intro"><p class="eyebrow">02 / PROTECTED RESOURCE</p><h1>You're inside,<br><span>{{ session.username }}.</span></h1><p class="lede">This page requires a signed login session. {% if mode == 'vulnerable' %}If you used the payload, you reached it without knowing the account password.{% else %}The parameterised login accepted a real credential pair.{% endif %}</p></section>
+<main class="panel dashboard"><span class="badge {{ mode }}">{{ mode | upper }} LOGIN SESSION</span><h2>Campus administration dashboard</h2><dl><div><dt>Signed in as</dt><dd>{{ session.username }}</dd></div><div><dt>Account role</dt><dd>{{ session.role }}</dd></div><div><dt>Protected content</dt><dd>Demo student records: 24</dd></div></dl><p class="muted">This is fictional content, visible to any authenticated demo account. No real records are stored.</p><form method="post" action="{{ url_for('logout') }}"><button type="submit" class="submit">Log out & return to the experiment →</button></form></main>
+{% endblock %}
