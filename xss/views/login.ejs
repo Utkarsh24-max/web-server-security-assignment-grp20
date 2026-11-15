@@ -1,0 +1,24 @@
+<%- include("partials/header", { pageTitle, currentUser, notice, mode }) %>
+<section class="login-layout">
+  <div class="hero">
+    <div class="eyebrow">WEB APPLICATION SECURITY LAB</div>
+    <h1>Understand Stored XSS.<br><span>See the mitigation.</span></h1>
+    <p>A community forum demonstrating how unsafe rendering of stored user input can affect another visitor.</p>
+    <div class="callout"><strong>Controlled environment</strong><br>This application is designed for localhost classroom demonstration only.</div>
+  </div>
+  <section class="panel login-card">
+    <div class="eyebrow">DEMO ACCESS</div><h2>Welcome back</h2>
+    <p class="muted">Sign in with one of the pre-created lab accounts.</p>
+    <% if (error) { %><div class="error"><%= error %></div><% } %>
+    <form action="/login" method="POST" class="stack">
+      <label for="username">Username</label><input id="username" name="username" required autocomplete="username" placeholder="alice or bob">
+      <label for="password">Password</label><input id="password" name="password" type="password" required autocomplete="current-password" placeholder="Demo password">
+      <button class="btn btn-primary full">Sign in <span>→</span></button>
+    </form>
+    <div class="demo-users">
+      <div><strong>Alice</strong><code>alice / alice123</code><small>Attacker simulation</small></div>
+      <div><strong>Bob</strong><code>bob / bob123</code><small>Victim simulation</small></div>
+    </div>
+  </section>
+</section>
+<%- include("partials/footer") %>

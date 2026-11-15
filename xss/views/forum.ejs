@@ -1,0 +1,23 @@
+<%- include("partials/header", { pageTitle, currentUser, notice, mode }) %>
+<section class="page-head">
+  <div><div class="eyebrow">COMMUNITY SPACE</div><h1>Discussion board</h1><p class="muted">A simple forum for our Stored XSS demonstration.</p></div>
+  <span class="mode <%= mode === 'vulnerable' ? 'danger' : 'safe' %>">● <%= mode === 'vulnerable' ? 'Vulnerable mode' : 'Secure mode' %></span>
+</section>
+<section class="panel mode-panel">
+  <div><div class="eyebrow">RENDERING MODE</div><h3>Choose how comments are rendered</h3><p class="muted">Vulnerable mode is intentionally unsafe and restricted to this local lab. Secure mode uses EJS HTML escaping.</p></div>
+  <div class="mode-buttons">
+    <form action="/mode" method="POST"><input type="hidden" name="mode" value="vulnerable"><button class="btn <%= mode === 'vulnerable' ? 'btn-danger' : 'btn-light' %>">Vulnerable</button></form>
+    <form action="/mode" method="POST"><input type="hidden" name="mode" value="secure"><button class="btn <%= mode === 'secure' ? 'btn-success' : 'btn-light' %>">Secure</button></form>
+  </div>
+</section>
+<section class="panel post-card">
+  <div class="post-meta"><span>GENERAL DISCUSSION</span><span><%= post.comment_count %> comments</span></div>
+  <h2><%= post.title %></h2><p><%= post.body %></p>
+  <a class="btn btn-primary" href="/posts/<%= post.id %>">Open discussion →</a>
+</section>
+<section class="steps">
+  <article class="step-card"><b>01</b><h3>Submit</h3><p>Alice submits a comment containing a harmless test payload.</p></article>
+  <article class="step-card"><b>02</b><h3>Persist</h3><p>The server stores the original comment in SQLite.</p></article>
+  <article class="step-card"><b>03</b><h3>Render</h3><p>Bob opens the discussion and the selected rendering mode is applied.</p></article>
+</section>
+<%- include("partials/footer") %>

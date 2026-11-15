@@ -1,0 +1,45 @@
+<%- include("partials/header", { pageTitle, currentUser, notice, mode }) %>
+<a class="back-link" href="/forum">← Back to discussions</a>
+<section class="page-head discussion-head">
+  <div><div class="eyebrow">GENERAL DISCUSSION</div><h1><%= post.title %></h1><p class="muted"><%= post.body %></p></div>
+  <span class="mode <%= mode === 'vulnerable' ? 'danger' : 'safe' %>">● <%= mode === 'vulnerable' ? 'Vulnerable mode' : 'Secure mode' %></span>
+</section>
+<section class="panel mode-panel compact">
+  <div><h3>Rendering mode</h3><p class="muted">Switch modes to compare this same stored comment.</p></div>
+  <div class="mode-buttons">
+    <form action="/mode" method="POST"><input type="hidden" name="mode" value="vulnerable"><button class="btn <%= mode === 'vulnerable' ? 'btn-danger' : 'btn-light' %>">Vulnerable</button></form>
+    <form action="/mode" method="POST"><input type="hidden" name="mode" value="secure"><button class="btn <%= mode === 'secure' ? 'btn-success' : 'btn-light' %>">Secure</button></form>
+  </div>
+</section>
+<section class="comments">
+  <div class="section-head"><div><div class="eyebrow">CONVERSATION</div><h2>Comments <span class="count"><%= comments.length %></span></h2></div></div>
+  <% if (!comments.length) { %><div class="empty"><h3>No comments yet</h3><p>Be the first to join the discussion.</p></div><% } %>
+  <% comments.forEach((comment) => { %>
+    <article class="comment">
+      <div class="avatar"><%= comment.username.charAt(0).toUpperCase() %></div>
+      <div class="comment-body">
+        <div class="comment-meta"><strong><%= comment.username %></strong><time><%= comment.created_at %></time></div>
+        <div class="comment-content">
+          <% if (mode === "vulnerable") { %>
+            <!-- INTENTIONALLY VULNERABLE: unescaped output, localhost classroom demonstration only. -->
+            <%- comment.content %>
+          <% } else { %>
+            <!-- MITIGATION: EJS escapes output for this HTML text context. -->
+            <%= comment.content %>
+          <% } %>
+        </div>
+      </div>
+    </article>
+  <% }) %>
+</section>
+<section class="panel composer">
+  <div class="eyebrow">ADD TO THE DISCUSSION</div><h2>Write a comment</h2>
+  <p class="muted">Signed in as <strong><%= currentUser.username %></strong>.</p>
+  <form action="/posts/<%= post.id %>/comments" method="POST" class="stack">
+    <label for="content">Your comment</label><textarea id="content" name="content" rows="4" maxlength="1000" required placeholder="Share your thoughts..."></textarea>
+    <div class="form-bottom"><small class="muted">Maximum 1,000 characters</small><button class="btn btn-primary">Post comment →</button></div>
+  </form>
+</section>
+<div class="warning"><strong>Lab safety:</strong> Vulnerable mode deliberately renders user input as HTML. Keep this application on localhost. Never deploy it publicly.</div>
+<form action="/comments/reset" method="POST" class="reset-form" data-confirm="Clear every comment from the local demo database?"><button class="text-button">Reset all demo comments</button></form>
+<%- include("partials/footer") %>
