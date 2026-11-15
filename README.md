@@ -61,7 +61,7 @@ Demonstrates:
 - Mitigation using parameterized execution with an argument vector and shell disabled (`shell=False`).
 - Automated security verification using Python's `unittest` suite (`test_app.py`).
 
-Implementation: [`Os-command-injection/`](./OS_Command_Injection/)
+Implementation: [`Os-command-injection/`](./Os_Command_Injection/)
 
 ### 4. Cross-Site Scripting (XSS)
 
