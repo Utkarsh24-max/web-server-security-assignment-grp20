@@ -20,7 +20,7 @@ Each group member independently implements one vulnerability variant, demonstrat
 |---|---|---|---|
 | Member 1 | IIT2024073 | CSRF | GET-based forged action |
 | Member 2 | Add roll number | SQL Injection | To be updated |
-| Member 3 | Add roll number | OS Command Injection | To be updated |
+| Member 3 | IIT2024056 | OS Command Injection | In-band (command output returned)|
 | Member 4 | Add roll number | Cross-Site Scripting (XSS) | To be updated |
 
 ## Project Structure
@@ -51,7 +51,17 @@ To be added.
 
 ### 3. OS Command Injection
 
-To be added.
+**Member:** Ravindra (IIT2024056)  
+**Variant:** In-band (command output returned)
+
+Demonstrates:
+- Vulnerable shell execution concatenating untrusted user input with `shell=True`.
+- In-band arbitrary command execution using shell command separator `&` (e.g. `hello & echo INJECTED`).
+- System reconnaissance exploits (`whoami`, `hostname`, `dir`) exposing server environment details.
+- Mitigation using parameterized execution with an argument vector and shell disabled (`shell=False`).
+- Automated security verification using Python's `unittest` suite (`test_app.py`).
+
+Implementation: [`command-injection/`](./OS_command-injection/)
 
 ### 4. Cross-Site Scripting (XSS)
 
