@@ -18,7 +18,7 @@ Each group member independently implements one vulnerability variant, demonstrat
 
 | Member | Roll Number | Vulnerability | Variant |
 |---|---|---|---|
-| Member 1 | Add roll number | CSRF | GET-based forged action |
+| Member 1 | IIT2024073 | CSRF | GET-based forged action |
 | Member 2 | Add roll number | SQL Injection | To be updated |
 | Member 3 | Add roll number | OS Command Injection | To be updated |
 | Member 4 | Add roll number | Cross-Site Scripting (XSS) | To be updated |
