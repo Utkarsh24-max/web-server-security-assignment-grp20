@@ -19,9 +19,9 @@ Each group member independently implements one vulnerability variant, demonstrat
 | Member | Roll Number | Vulnerability | Variant |
 |---|---|---|---|
 | Member 1 | IIT2024073 | CSRF | GET-based forged action |
-| Member 2 | Add roll number | SQL Injection | To be updated |
+| Member 2 | IIT2024071 | SQL Injection | To be updated |
 | Member 3 | IIT2024056 | OS Command Injection | In-band (command output returned)|
-| Member 4 | Add roll number | Cross-Site Scripting (XSS) | To be updated |
+| Member 4 | IIT2024066 | Cross-Site Scripting (XSS) | To be updated |
 
 ## Project Structure
 
